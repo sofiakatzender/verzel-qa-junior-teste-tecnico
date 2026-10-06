@@ -97,11 +97,10 @@ verzel-qa-junior-teste-tecnico/
 │   └── bugs.md
 │
 ├── evidencias/
-│   ├── login/
+│   ├── frete/
 │   ├── carrinho/
 │   ├── checkout/
-│   ├── cupom/
-│   └── frete/
+│   └── cupom/
 │
 └── automacao/
     ├── tests/
