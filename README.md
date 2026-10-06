@@ -83,11 +83,11 @@ A documentação da automação está disponível em [`automacao/README.md`](aut
 ## Estrutura do projeto
 
 ```text
-teste-qa-verzel/
+verzel-qa-junior-teste-tecnico/
 │
 ├── README.md
 │
-├── cenarios-de-teste/
+├── cenarios/
 │   └── cenarios.md
 │
 ├── execucao/
@@ -130,7 +130,7 @@ teste-qa-verzel/
 
 | Documento | Descrição |
 |---|---|
-| [`cenarios-de-teste/cenarios.md`](cenarios-de-teste/cenarios.md) | Cenários e casos de teste executados |
+| [`cenarios/cenarios.md`](cenarios/cenarios.md) | Cenários e casos de teste executados |
 | [`execucao/resultados.md`](execucao/resultados.md) | Resultados e evidências da execução |
 | [`bugs/bugs.md`](bugs/bugs.md) | Registro e detalhamento dos bugs encontrados |
 | [`automacao/README.md`](automacao/README.md) | Documentação dos testes automatizados |
