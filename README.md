@@ -4,7 +4,7 @@
 
 Este repositório apresenta a execução do **teste técnico para a vaga de QA Junior da Verzel**, realizado sobre a aplicação **Verzel Store**.
 
-O objetivo foi validar as principais regras de negócio da aplicação por meio de **testes funcionais manuais, testes exploratórios e automação com Playwright**, registrando os resultados, evidências e defeitos encontrados durante a execução.
+O objetivo foi validar as principais regras de negócio da aplicação por meio de **testes funcionais manuais, testes exploratórios, testes de API e automação com Playwright**, registrando os resultados, evidências e defeitos encontrados durante a execução.
 
 ---
 
@@ -23,10 +23,17 @@ Durante a execução foram avaliados:
 - Limite máximo de 5 unidades por produto.
 - Cálculo do subtotal e valor total.
 - Validação de nome, e-mail e CEP no checkout.
+- Consulta de produtos por API.
+- Cálculo de carrinho por API.
+- Validação de cupons por API.
+- Criação de pedidos por API.
+- Validação das regras de negócio diretamente na API.
 
 ---
 
 ## Resultado dos testes
+
+### Testes manuais
 
 Foram executados **16 cenários de teste manuais**.
 
@@ -38,13 +45,42 @@ Foram executados **16 cenários de teste manuais**.
 
 **Taxa de aprovação: 93,75%**
 
-O único cenário reprovado foi o **CT007**, relacionado à regra de frete grátis para um subtotal exatamente igual a **R$ 200,00**.
+O único cenário manual reprovado foi o **CT007**, relacionado à regra de frete grátis para um subtotal exatamente igual a **R$ 200,00**.
 
 O defeito foi registrado como **BUG-001**.
 
+### Testes de API
+
+Foram executados **14 cenários de teste diretamente na API**.
+
+| Resultado | Quantidade |
+|---|---:|
+| Aprovados | 12 |
+| Reprovados | 2 |
+| Bugs distintos identificados | 1 |
+
+Os cenários reprovados foram:
+
+- **API-008** — reproduziu o BUG-001.
+- **API-011** — identificou o BUG-002.
+
+O API-008 não representa um novo bug, pois reproduz o mesmo comportamento encontrado no CT007.
+
+### Automação
+
+Foram automatizados **3 cenários utilizando Playwright**.
+
+| Cenário | Resultado |
+|---|---|
+| CT001 — Aplicar cupom válido | PASSOU |
+| CT004 — Aplicar cupom inexistente | PASSOU |
+| CT007 — Frete grátis para subtotal de R$ 200,00 | FALHOU — BUG-001 |
+
+O **CT007 falhou propositalmente**, pois a automação foi criada para validar a regra de frete grátis para subtotal de R$ 200,00. Como a aplicação apresentou o comportamento incorreto identificado no **BUG-001**, o teste automatizado falhou, confirmando a existência do defeito.
+
 ---
 
-## Bug identificado
+## Bugs identificados
 
 ### BUG-001 — Frete grátis não aplicado para subtotal de R$ 200,00
 
@@ -52,7 +88,25 @@ De acordo com a regra de negócio, pedidos com subtotal **maior ou igual a R$ 20
 
 Durante a execução, um carrinho com subtotal exatamente igual a **R$ 200,00** continuou apresentando frete de **R$ 19,90**.
 
-O comportamento foi reproduzido manualmente e também identificado pela automação com Playwright.
+O comportamento foi:
+
+- identificado no teste manual **CT007**;
+- reproduzido pela API no **API-008**;
+- reproduzido pela automação com Playwright no **CT007**.
+
+**Severidade:** Média  
+**Prioridade:** Alta  
+**Status:** Aberto
+
+O detalhamento completo está disponível em [`bugs/bugs.md`](bugs/bugs.md).
+
+### BUG-002 — API permite quantidade superior ao limite de 5 unidades
+
+A regra de negócio estabelece limite máximo de **5 unidades do mesmo produto**.
+
+Durante o teste **API-011**, a API aceitou **6 unidades da Mochila Urbana 20L**, calculando normalmente o carrinho em vez de retornar o erro `QUANTIDADE_MAXIMA_EXCEDIDA`.
+
+O comportamento foi identificado exclusivamente na API, enquanto a interface manualmente testada respeitou o limite de 5 unidades.
 
 **Severidade:** Média  
 **Prioridade:** Alta  
@@ -64,19 +118,27 @@ O detalhamento completo está disponível em [`bugs/bugs.md`](bugs/bugs.md).
 
 ## Automação
 
-Foram automatizados 3 cenários utilizando **Playwright**:
+A automação foi desenvolvida utilizando **Playwright**, com execução em **Chromium**.
 
-| Cenário | Resultado |
-|---|---|
-| CT001 — Aplicar cupom válido | PASSOU |
-| CT004 — Aplicar cupom inexistente | PASSOU |
-| CT007 — Frete grátis para subtotal de R$ 200,00 | FALHOU — BUG-001 |
+Os cenários automatizados foram selecionados a partir dos testes funcionais realizados manualmente.
 
-O **CT007 falhou propositalmente**, pois a automação foi criada para validar a regra de frete grátis para subtotal de R$ 200,00. Como a aplicação apresentou o comportamento incorreto identificado no **BUG-001**, o teste automatizado falhou, confirmando a existência do defeito.
+Os testes automatizados são:
 
-Os outros dois cenários automatizados foram executados com sucesso.
+- **CT001** — Aplicar cupom válido.
+- **CT004** — Aplicar cupom inexistente.
+- **CT007** — Validar frete grátis para subtotal de R$ 200,00.
 
-A documentação da automação está disponível em [`automacao/README.md`](automacao/README.md).
+O CT007 permanece reprovado propositalmente para reproduzir o **BUG-001**.
+
+A documentação completa da automação está disponível em [`automacao/README.md`](automacao/README.md).
+
+As evidências da execução automatizada estão disponíveis em:
+
+```text
+evidencias/automacao/
+├── CT007-automacao-bug-001-001.png
+└── CT007-automacao-bug-001-002.png
+```
 
 ---
 
@@ -97,6 +159,8 @@ verzel-qa-junior-teste-tecnico/
 │   └── bugs.md
 │
 ├── evidencias/
+│   ├── api/
+│   ├── automacao/
 │   ├── frete/
 │   ├── carrinho/
 │   ├── checkout/
@@ -130,20 +194,29 @@ verzel-qa-junior-teste-tecnico/
 | Documento | Descrição |
 |---|---|
 | [`cenarios/cenarios.md`](cenarios/cenarios.md) | Cenários e casos de teste executados |
-| [`execucao/resultados.md`](execucao/resultados.md) | Resultados e evidências da execução |
+| [`execucao/resultados.md`](execucao/resultados.md) | Resultados, evidências e detalhes da execução |
 | [`bugs/bugs.md`](bugs/bugs.md) | Registro e detalhamento dos bugs encontrados |
 | [`automacao/README.md`](automacao/README.md) | Documentação dos testes automatizados |
 
-As evidências dos testes estão organizadas no diretório `evidencias/`, separadas por funcionalidade.
+As evidências dos testes estão organizadas no diretório `evidencias/`, separadas por tipo de teste e funcionalidade.
 
 ---
 
 ## Conclusão
 
-A execução apresentou **93,75% de aprovação**, com 15 dos 16 cenários manuais aprovados.
+A execução dos testes demonstrou que a maior parte das regras de negócio avaliadas está sendo respeitada.
 
-O principal ponto identificado foi uma inconsistência na regra de **frete grátis para o subtotal de R$ 200,00**, registrada como **BUG-001**.
+Nos testes manuais, foram aprovados **15 dos 16 cenários**, resultando em uma taxa de aprovação de **93,75%**.
 
-Além dos testes manuais, o comportamento foi reproduzido por meio de automação com Playwright. A falha do **CT007** confirmou que o defeito identificado manualmente também pode ser detectado automaticamente.
+Nos testes de API, foram aprovados **12 dos 14 cenários**.
 
-O projeto demonstra a aplicação de um fluxo de QA envolvendo **planejamento, execução, registro de evidências, identificação de defeitos e automação de testes**.
+Na automação com Playwright, foram aprovados **2 dos 3 cenários automatizados**, sendo o CT007 reprovado propositalmente por reproduzir o BUG-001.
+
+Foram identificados **2 bugs distintos**:
+
+1. **BUG-001:** frete grátis não aplicado quando o subtotal é exatamente R$ 200,00.
+2. **BUG-002:** API permite quantidade superior ao limite de 5 unidades por produto.
+
+O **API-008 e a automação do CT007 não representam novos bugs**, pois reproduzem o BUG-001 já identificado no teste manual CT007.
+
+O projeto demonstra a aplicação de um fluxo de QA envolvendo **planejamento, execução de testes manuais e de API, registro de evidências, identificação e documentação de defeitos e automação de testes**.

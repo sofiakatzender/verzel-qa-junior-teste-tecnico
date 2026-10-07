@@ -33,15 +33,31 @@ Adiciona 2 unidades da Mochila Urbana 20L, totalizando exatamente R$ 200,00, e v
 
 O teste identificou que, para um subtotal exatamente igual a R$ 200,00, o sistema continua cobrando R$ 19,90 de frete.
 
+A reprovação é intencional, pois o teste automatizado foi desenvolvido para validar a regra de negócio e identificar o BUG-001 encontrado durante os testes manuais.
+
 ## Como executar
 
 ### Instalar as dependências
+
+Dentro da pasta `automacao`:
 
 ```bash
 npm install
 ```
 
+### Instalar os navegadores do Playwright
+
+```bash
+npx playwright install
+```
+
 ### Executar todos os testes
+
+```bash
+npm test
+```
+
+Também é possível executar diretamente:
 
 ```bash
 npx playwright test
@@ -54,6 +70,8 @@ npx playwright test tests/cupom.spec.js
 ```
 
 ### Abrir o relatório
+
+Após a execução dos testes:
 
 ```bash
 npx playwright show-report
@@ -70,6 +88,21 @@ npx playwright show-report
 **Total: 2 testes aprovados e 1 teste reprovado.**
 
 O CT007 permanece reprovado propositalmente, pois a automação foi criada para identificar o BUG-001 encontrado durante os testes manuais.
+
+## Evidências
+
+As evidências da execução automatizada estão disponíveis no diretório:
+
+```text
+evidencias/automacao/
+```
+
+Para o CT007, foram geradas as seguintes evidências:
+
+- `CT007-automacao-bug-001-001.png`
+- `CT007-automacao-bug-001-002.png`
+
+As evidências demonstram a execução do teste automatizado e a reprodução do comportamento relacionado ao BUG-001.
 
 ## Estrutura
 

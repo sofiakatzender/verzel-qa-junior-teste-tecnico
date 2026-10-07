@@ -94,3 +94,97 @@ subtotal >= R$ 200,00
 ```
 
 em vez de considerar somente valores superiores a R$ 200,00.
+
+## BUG-002 — API permite quantidade superior ao limite de 5 unidades
+
+**Status:** Aberto  
+**Severidade:** Média  
+**Prioridade:** Alta  
+**Cenário relacionado:** API-011 — Quantidade superior ao limite  
+**Critério de aceite:** CA10
+
+### Descrição
+
+A API permite adicionar mais de 5 unidades do mesmo produto, contrariando a regra definida na documentação.
+
+De acordo com o critério CA10, o limite máximo permitido é de **5 unidades por produto**.
+
+### Pré-condições
+
+- API da Verzel Store disponível.
+- Produto `P005 — Mochila Urbana 20L` disponível.
+
+### Passos para reprodução
+
+1. Enviar uma requisição `POST /api/carrinho/calcular`.
+2. Informar o produto `P005`.
+3. Informar quantidade igual a 6.
+4. Verificar a resposta da API.
+
+### Resultado esperado
+
+A API deve rejeitar a requisição e retornar o erro:
+
+```text
+QUANTIDADE_MAXIMA_EXCEDIDA
+```
+
+indicando que o limite máximo de 5 unidades foi ultrapassado.
+
+### Resultado obtido
+
+A API aceita normalmente a quantidade de **6 unidades**.
+
+A resposta retornou:
+
+- **Quantidade:** 6 unidades
+- **Subtotal:** R$ 600,00
+- **Desconto:** R$ 0,00
+- **Frete:** R$ 0,00
+- **Total:** R$ 600,00
+- **Frete grátis:** `true`
+
+Nenhum erro relacionado à quantidade máxima foi retornado.
+
+### Ambiente
+
+| Informação | Detalhe |
+|---|---|
+| Aplicação | Verzel Store |
+| Endpoint | `POST /api/carrinho/calcular` |
+| Produto | P005 — Mochila Urbana 20L |
+| Quantidade testada | 6 unidades |
+| Versão da documentação | 2.3.0 |
+| Data da identificação | 06/10/2026 |
+
+### Impacto
+
+O problema permite que a regra de negócio de limite máximo de 5 unidades seja contornada por meio da API.
+
+Isso pode permitir pedidos com quantidade superior ao limite estabelecido pela aplicação.
+
+### Evidência
+
+`evidencias/api/API-011-6-unidades-bug-002.png`
+
+### Resultado do teste relacionado
+
+**API-011 — Reprovado**
+
+O teste identificou que a API aceita 6 unidades do mesmo produto, quando deveria rejeitar a operação.
+
+### Sugestão de correção
+
+Adicionar ou corrigir a validação da quantidade de itens na API, garantindo que quantidades superiores a 5 sejam rejeitadas.
+
+A condição esperada deve considerar:
+
+```text
+quantidade <= 5
+```
+
+Caso a quantidade seja maior que 5, a API deve retornar o erro:
+
+```text
+QUANTIDADE_MAXIMA_EXCEDIDA
+```
