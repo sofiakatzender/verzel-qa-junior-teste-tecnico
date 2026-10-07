@@ -203,7 +203,9 @@ verzel-qa-junior-teste-tecnico/
 ├── README.md
 │
 ├── cenarios/
-│   └── cenarios.md
+│    ├── cenarios.md
+│    └── features/
+│       └── cenarios.feature
 │
 ├── execucao/
 │   └── resultados.md
