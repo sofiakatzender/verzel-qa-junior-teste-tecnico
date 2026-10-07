@@ -99,8 +99,8 @@ evidencias/automacao/
 
 Para o CT007, foram geradas as seguintes evidências:
 
-- `CT007-automacao-bug-001-001.png`
-- `CT007-automacao-bug-001-002.png`
+- `CT007-automacao-bug-001.png`
+- `CT007-automacao-bug-002.png`
 
 As evidências demonstram a execução do teste automatizado e a reprodução do comportamento relacionado ao BUG-001.
 

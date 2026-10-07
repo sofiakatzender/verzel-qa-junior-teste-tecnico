@@ -19,7 +19,7 @@ A execução foi realizada com base nos critérios de aceite, regras de negócio
 - **BUG-001 reproduzido**
 - **BUG-002 identificado**
 
-O BUG-001 foi identificado inicialmente no teste manual CT007 e posteriormente reproduzido por meio do teste API-008 e da automação automatizada do CT007.
+O BUG-001 foi identificado inicialmente no teste manual CT007 e posteriormente reproduzido por meio do teste API-008 e da automação do CT007.
 
 ---
 
@@ -526,8 +526,8 @@ O teste falhou porque o sistema não apresentou o frete como grátis, reproduzin
 
 **Evidências da automação:**
 
-- `evidencias/automacao/CT007-automacao-bug-001-001.png`
-- `evidencias/automacao/CT007-automacao-bug-001-002.png`
+- `evidencias/automacao/CT007-automacao-bug-001.png`
+- `evidencias/automacao/CT007-automacao-bug-002.png`
 
 A reprovação do CT007 é **intencional**, pois o objetivo da automação é validar o comportamento esperado e identificar a ocorrência do BUG-001.
 
@@ -568,8 +568,8 @@ Identificado inicialmente no **CT007**, reproduzido posteriormente no **API-008*
 - `evidencias/frete/CT007-R200-sem-cupom.png`
 - `evidencias/frete/CT007-R200-com-cupom.png`
 - `evidencias/api/API-008-frete-r200-bug-001.png`
-- `evidencias/automacao/CT007-automacao-bug-001-001.png`
-- `evidencias/automacao/CT007-automacao-bug-001-002.png`
+- `evidencias/automacao/CT007-automacao-bug-001.png`
+- `evidencias/automacao/CT007-automacao-bug-002.png`
 
 ### BUG-002 — API permite quantidade superior ao limite de 5 unidades
 

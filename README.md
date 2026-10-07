@@ -136,8 +136,8 @@ As evidências da execução automatizada estão disponíveis em:
 
 ```text
 evidencias/automacao/
-├── CT007-automacao-bug-001-001.png
-└── CT007-automacao-bug-001-002.png
+├── CT007-automacao-bug-001.png
+└── CT007-automacao-bug-002.png
 ```
 
 ---
