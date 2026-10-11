@@ -4,7 +4,7 @@
 
 Este repositório apresenta a execução do **teste técnico para a vaga de QA Júnior da Verzel**, realizado sobre a aplicação **Verzel Store**.
 
-O objetivo foi validar as principais regras de negócio da aplicação por meio de **testes funcionais manuais, testes exploratórios, testes de API e automação com Playwright**, registrando os resultados, evidências e defeitos encontrados durante a execução.
+O objetivo foi validar as principais regras de negócio da aplicação por meio de **testes funcionais manuais, testes exploratórios, testes de API, Gherkin e automação com Playwright**, registrando os resultados, evidências e defeitos encontrados durante a execução.
 
 ---
 
